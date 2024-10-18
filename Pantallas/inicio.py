@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import font, PhotoImage, Label, Button
 
+
 class InicioApp(tk.Frame):
     def __init__(self, root=None):
         super().__init__(root)
