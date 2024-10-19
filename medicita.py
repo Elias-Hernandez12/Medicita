@@ -5,7 +5,8 @@ def main():
     root = tk.Tk()
     root.title("Medicita")
     root.iconbitmap("imagenes\chequeo.ico")
-    root.resizable(0,0)
+    root.resizable(1,1)
+    root.geometry("1420x800")
     
     inicio_app = InicioApp(root)
     inicio_app.pack(fill=tk.BOTH, expand=True)

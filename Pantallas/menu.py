@@ -1,99 +1,91 @@
 import tkinter as tk
-from tkinter import font, PhotoImage, Label, Button
+from tkinter import PhotoImage
 
 class MenuApp(tk.Frame):
-    def __init__(self, root=None):
-        super().__init__(root)
-        self.root = root
-        self.pack(fill=tk.BOTH, expand=True)
-        self.configure(bg="#E0F7FA")  # Color de fondo para el Frame
-        self.root.title("MediCitAa")
-        self.root.geometry("1420x800")
+    def __init__(self, master=None):
+        super().__init__(master)
+        master.geometry("1420x800")
+        self.master = master
+        self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
 
     def create_widgets(self):
-       
-        # Configuración de fuentes
-        self.subtitulo_font = font.Font(family="Helvetica", size=25, weight="bold")
-        self.texto_cuadro_font = font.Font(family="Helvetica", size=14)
+        # Frame para el header
+        self.header_frame = tk.Frame(self, bg="#E0F7FA")
+        self.header_frame.pack(padx=20, pady=10, fill=tk.X)
 
-        # Etiqueta para el nombre del programa como header
-        self.app_label = Label(self, text="MediCita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
-        self.app_label.place(x=30, y=20)
+        # Título del programa
+        self.label_titulo = tk.Label(self.header_frame, text="Medicita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
+        self.label_titulo.pack(side=tk.LEFT)
 
-        # Botones de iniciar sesión y registrarse
-        self.btn_cerrar_sesion = Button(self, text="Cerrar sesión", command=self.cerrar_sesion, bg="black", fg="white", width=15, height=2, font=("arial", 14, "bold"), cursor="hand2")
-        self.btn_cerrar_sesion.place(x=980, y=20)
+        # Botón de perfil con imagen
+        self.boton_perfil_imagen = PhotoImage(file="imagenes/usuario.png")  # Asegúrate de que la ruta sea correcta
+        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA")
+        self.boton_perfil.pack(side=tk.RIGHT, padx=(20, 10))
 
-        self.icono_perfil = PhotoImage(file="imagenes/usuario.png")
-        self.btn_perfil = Button(self, image=self.icono_perfil , command=self.perfil, bg="#E0F7FA", fg="#000000", width=80, height=70, cursor="hand2", relief="flat", activebackground="#E0F7FA", highlightthickness=0, borderwidth=0)
-        self.btn_perfil.place(x=1250, y=12)
+        # Botón de cerrar sesión
+        self.boton_cerrar_sesion = tk.Button(self.header_frame, text="Cerrar sesión", font=("Helvetica", 18, "bold"), command=self.cerrar_sesion, width=12, height=2, bg="black", fg="white", cursor="hand2")
+        self.boton_cerrar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
-        # Etiqueta para el título principal
-        self.titulo_label = Label(self, text="Bienvenido a MediCita", font=("Helvetica",30 , "bold"), bg="#E0F7FA", fg="black")
-        self.titulo_label.pack(pady=(150, 20))
+        # Frame principal para el contenido
+        self.main_frame = tk.Frame(self, bg="#E0F7FA")
+        self.main_frame.pack(padx=20, pady=20, fill=tk.BOTH, expand=True)
 
-        # Subtítulo
-        self.subtitulo_label = Label(self, text="Selecciona una opción", font=self.subtitulo_font, bg="#E0F7FA", fg="gray")
-        self.subtitulo_label.pack(pady=20)
+        # Label de bienvenida
+        self.label_bienvenida = tk.Label(self.main_frame, text="Bienvenido a Medicita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="black")
+        self.label_bienvenida.pack(pady=(20, 20))
 
-        # Cuadro 1
-        self.cuadro1 = tk.Frame(self, bg="white", bd=2, relief="groove", width=380, height=250)
-        self.cuadro1.place(x=53, y=400)  # Ajustar el espaciado
+        # Label de gestor de citas
+        self.label_gestor = tk.Label(self.main_frame, text="Tu gestor de citas", font=("Helvetica", 22, "bold"), bg="#E0F7FA", fg="#8a8d8e")
+        self.label_gestor.pack(pady=(10, 70))
 
-        self.titulo1 = Label(self.cuadro1, text="Registrar Cita", font=self.subtitulo_font, bg="white")
-        self.titulo1.pack(pady=5)
+        # Frame para los 3 elementos
+        self.frames_row = tk.Frame(self.main_frame, bg="#E0F7FA")
+        self.frames_row.pack(fill=tk.X)
 
-        self.icono1 = PhotoImage(file="imagenes/registrar-cita.png")
-        self.boton_icono1 = Button(self.cuadro1, image=self.icono1, command=self.registrar_cita, bg="white", bd=0, cursor="hand2", activebackground="#ffffff", highlightthickness=0, borderwidth=0)
-        self.boton_icono1.image = self.icono1  # Mantener una referencia a la imagen
-        self.boton_icono1.pack(padx=20, pady=10)
+        # Crear 3 frames en una fila
+        self.create_frame(self.frames_row, "Registrar cita", "imagenes/registrar-cita.png", self.registrar_cita)
+        self.create_frame(self.frames_row, "Historial de citas", "imagenes/historial-de-citas.png", self.historial_citas)
+        self.create_frame(self.frames_row, "Agenda", "imagenes/agenda.png", self.agenda)
 
-        # Cuadro 2
-        self.cuadro2 = tk.Frame(self, bg="white", bd=2, relief="groove", width=380, height=250)
-        self.cuadro2.place(x=519, y=400)  # Ajustar el espaciado
+    def create_frame(self, parent, title, image_path, command):
+        # Crear un frame
+        frame = tk.Frame(parent, bg="#ffffff", relief=tk.GROOVE, borderwidth=2)
+        frame.pack(side=tk.LEFT, padx=(10, 10), pady=(30, 30), fill=tk.BOTH, expand=True)
 
-        self.titulo2 = Label(self.cuadro2, text="Historial de Citas", font=self.subtitulo_font, bg="white")
-        self.titulo2.pack(pady=5)
+        # Título en el frame
+        label_title = tk.Label(frame, text=title, font=("Helvetica", 28, "bold"), bg="#ffffff")
+        label_title.pack(pady=(10, 10))
 
-        self.icono2 = PhotoImage(file="imagenes/historial-de-citas.png")
-        self.boton_icono2 = Button(self.cuadro2, image=self.icono2, command=self.historial, bg="white", bd=0, cursor="hand2", activebackground="#ffffff", highlightthickness=0, borderwidth=0)
-        self.boton_icono2.image = self.icono2  # Mantener una referencia a la imagen
-        self.boton_icono2.pack(padx=20, pady=10)
+        # Botón que muestra la imagen
+        button_image = PhotoImage(file=image_path)  # Carga la imagen
+        boton_imagen = tk.Button(frame, image=button_image, command=command, bg="#ffffff", borderwidth=0)
+        boton_imagen.pack(pady=(10, 50))
+        boton_imagen.image = button_image  # Mantener una referencia a la imagen
 
-        # Cuadro 3
-        self.cuadro3 = tk.Frame(self, bg="white", bd=2, relief="groove", width=380, height=250)
-        self.cuadro3.place(x=986, y=400)  # Ajustar el espaciado
+    def registrar_cita(self):
+        print("Registrar cita...")  # Lógica para registrar cita
 
-        self.titulo3 = Label(self.cuadro3, text="Agenda", font=self.subtitulo_font, bg="white")
-        self.titulo3.pack(pady=5)
+    def historial_citas(self):
+        print("Historial de citas...")  # Lógica para mostrar historial de citas
 
-        self.icono3 = PhotoImage(file="imagenes/agenda.png")
-        self.boton_icono3 = Button(self.cuadro3, image=self.icono3, command=self.agenda, bg="white", bd=0, cursor="hand2", activebackground="#ffffff", highlightthickness=0, borderwidth=0)
-        self.boton_icono3.image = self.icono3  # Mantener una referencia a la imagen
-        self.boton_icono3.pack(padx=20, pady=10)
-
-        # Establecer un tamaño uniforme para los cuadros
-        for cuadro in [self.cuadro1, self.cuadro2, self.cuadro3]:
-            cuadro.pack_propagate(False)  # Desactivar el cambio de tamaño basado en el contenido
+    def agenda(self):
+        print("Mostrar agenda...")  # Lógica para mostrar la agenda
+        
+    def perfil(self):
+        # Aquí puedes definir la lógica para el perfil
+        print("Registro...")  # Este es un ejemplo
 
     def cerrar_sesion(self):
-        print("cerrar sesión")  # Aquí puedes agregar la lógica para la pantalla de inicio de sesión
+        # Aquí puedes definir la lógica para cerrar sesión
+        print("Iniciar sesión...")  # Este es un ejemplo
 
-    def perfil(self):
-        print("perfil")  # Aquí puedes agregar la lógica para la pantalla de registro
-        
-    def registrar_cita(self):
-        print("registrar_cita")
-    
-    def historial(self):
-        print("Historial de citas")
-        
-    def agenda(self):
-        print("Agenda")
-    
 if __name__ == "__main__":
     root = tk.Tk()
-    app = MenuApp(root)
-    root.mainloop()
+    root.title("Medicita")  # Título de la ventana
+    root.iconbitmap("imagenes/chequeo.ico")  # Cambia esto a la ruta correcta de tu icono
 
+    app = MenuApp(master=root)
+    app.pack(fill=tk.BOTH, expand=True)
+
+    root.mainloop()
