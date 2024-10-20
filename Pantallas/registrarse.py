@@ -76,13 +76,13 @@ class RegistrarseApp(tk.Frame):
         self.set_placeholder(self.entry_confirmar_contraseña, "*************")
         
         # Botón para registrarse
-        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.registrarse, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_registrarse.grid(row=10, column=0, columnspan=4, padx=(70, 0), pady=10, sticky="we")
         
         # Label pregunta y Boton iniciar sesion
         self.label_pregunta = tk.Label(self.form_frame, text="¿Ya tienes una cuenta?", font=("Helvetica", 18), bg="#ffffff", fg="black")
         self.label_pregunta.grid(row=11, column=0, columnspan=1, padx=(70, 10), pady=5, sticky="we")
-        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
+        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_iniciar_sesion, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
         self.boton_iniciar_sesion.grid(row=11, column=1, padx=(10, 50), pady=5, sticky="we")
     
     def set_placeholder(self, entry, placeholder_text):
@@ -103,15 +103,6 @@ class RegistrarseApp(tk.Frame):
         if entry.get() == "":
             entry.insert(0, placeholder_text)  # Restaura el texto inicial
             entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
-
-    def regresar(self):
-        print("Regresar...")  # Este es un ejemplo
-        
-    def iniciar_sesion(self):
-        print("Registro...")  # Este es un ejemplo
-
-    def registrarse(self):
-        pass
 
                 
 if __name__ == "__main__":

@@ -73,7 +73,7 @@ class IniciarSesionApp(tk.Frame):
         # Label pregunta y Boton registarse
         self.label_pregunta = tk.Label(self.form_frame, text="¿No tienes una cuenta?", font=("Helvetica", 18), bg="#ffffff", fg="black")
         self.label_pregunta.grid(row=8, column=0, columnspan=1, padx=(70, 10), pady=(10, 10), sticky="we")
-        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.recuperar_password, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
+        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrarse, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
         self.boton_registrarse.grid(row=8, column=1, padx=(10, 50), pady=(10, 10), sticky="we")
     
     def set_placeholder(self, entry, placeholder_text):
@@ -93,28 +93,7 @@ class IniciarSesionApp(tk.Frame):
     def on_focus_out(self, event, entry, placeholder_text):
         if entry.get() == "":
             entry.insert(0, placeholder_text)  # Restaura el texto inicial
-            entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
-         
-    # cierra la pantalla iniciar_sesion.py y abre la pantalla inicio.py   
-    def regresar(self):
-        # Cierra la ventana de iniciar_sesion.py
-        self.master.withdraw()  # Oculta la ventana actual
-
-        # Crear una nueva ventana para la pantalla de inicio
-        root = tk.Toplevel(self.master)
-        from Pantallas.inicio import InicioApp
-        app = InicioApp(master=root)
-        app.pack(fill=tk.BOTH, expand=True)
-
-        # Llama al método reset para asegurarte de que los widgets estén configurados
-        app.reset()  # Reinicia la pantalla de inicio si es necesario
-
-        # Cuando la nueva ventana se cierre, volver a mostrar la ventana original
-        root.protocol("WM_DELETE_WINDOW", self.master.deiconify)  # Vuelve a mostrar la ventana principal
-
-    # cierra la pantalla iniciar_sesion.py y abre la pantalla registrarse.py   
-    def registrarse(self):
-        print("Registro...")  # Este es un ejemplo
+            entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholde
 
     # cierra la pantalla iniciar_sesion.py y abre la pantalla menú.py   
     def iniciar_sesion(self):
@@ -124,7 +103,7 @@ class IniciarSesionApp(tk.Frame):
 
     # cierra la pantalla iniciar_sesion.py y abre la pantalla recuperar_contraseña.py
     def recuperar_password(self):
-        print("Recuperar contraseña...")
+        pass
         
         
 if __name__ == "__main__":
