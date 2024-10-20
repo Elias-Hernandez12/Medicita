@@ -1,14 +1,16 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
+
 class IniciarSesionApp(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None,  controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
+        master.minsize(1420, 800)
+        self.controlador = controlador
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
-        
         
     def create_widgets(self):
         # Frame para el header
@@ -26,15 +28,11 @@ class IniciarSesionApp(tk.Frame):
         # Crear el formulario de inicio de sesión dentro de un frame
         self.crear_frame_iniciar_sesion()
         
-        # Crear el boton regresar
-        self.crear_boton_regresar()
-        
-    def crear_boton_regresar(self):
         # Cargar la imagen (asegúrate de que la ruta sea correcta)
         self.imagen = PhotoImage(file="imagenes/regresar.png")  # Cambia esto a la ruta correcta de tu imagen
         
         # Botón de imagen
-        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.regresar, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
+        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_inicio, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
         self.boton_imagen.place(x=80, y=30)  # Ajusta la posición como desees
         
     def crear_frame_iniciar_sesion(self):
@@ -65,7 +63,7 @@ class IniciarSesionApp(tk.Frame):
         self.set_placeholder(self.entry_contrasena, "************")
 
         # Botón para iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_iniciar_sesion.grid(row=6, column=0, columnspan=4, padx=(70, 0), pady=(20, 10), sticky="we")
         
         # boton de recuperar contraseña
@@ -96,31 +94,41 @@ class IniciarSesionApp(tk.Frame):
         if entry.get() == "":
             entry.insert(0, placeholder_text)  # Restaura el texto inicial
             entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
-            
+         
+    # cierra la pantalla iniciar_sesion.py y abre la pantalla inicio.py   
     def regresar(self):
+        # Cierra la ventana de iniciar_sesion.py
+        self.master.withdraw()  # Oculta la ventana actual
 
-        print("Regresar...")  # Este es un ejemplo
-        
+        # Crear una nueva ventana para la pantalla de inicio
+        root = tk.Toplevel(self.master)
+        from Pantallas.inicio import InicioApp
+        app = InicioApp(master=root)
+        app.pack(fill=tk.BOTH, expand=True)
+
+        # Llama al método reset para asegurarte de que los widgets estén configurados
+        app.reset()  # Reinicia la pantalla de inicio si es necesario
+
+        # Cuando la nueva ventana se cierre, volver a mostrar la ventana original
+        root.protocol("WM_DELETE_WINDOW", self.master.deiconify)  # Vuelve a mostrar la ventana principal
+
+    # cierra la pantalla iniciar_sesion.py y abre la pantalla registrarse.py   
     def registrarse(self):
-
         print("Registro...")  # Este es un ejemplo
 
+    # cierra la pantalla iniciar_sesion.py y abre la pantalla menú.py   
     def iniciar_sesion(self):
         correo = self.entry_correo.get()
         contrasena = self.entry_contrasena.get()
         print(f"Iniciar sesión con correo: {correo} y contraseña: {contrasena}") 
 
-
+    # cierra la pantalla iniciar_sesion.py y abre la pantalla recuperar_contraseña.py
     def recuperar_password(self):
         print("Recuperar contraseña...")
         
         
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Medicita")  # Título de la ventana
-    root.iconbitmap("imagenes/chequeo.ico")  # Cambia esto a la ruta correcta de tu icono
-
     app = IniciarSesionApp(master=root)
     app.pack(fill=tk.BOTH, expand=True)
-
     root.mainloop()

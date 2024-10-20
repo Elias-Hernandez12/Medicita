@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter import PhotoImage
 
 class InicioApp(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
+        master.minsize(1420, 800)
+        self.controlador = controlador
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
@@ -19,11 +21,11 @@ class InicioApp(tk.Frame):
         self.label_titulo.pack(side=tk.LEFT)
 
         # Botón de registrarse
-        self.boton_registrarse = tk.Button(self.header_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.registrar, width=12, height=2, bg="black", fg="white", cursor="hand2")
+        self.boton_registrarse = tk.Button(self.header_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrarse, width=12, height=2, bg="black", fg="white", cursor="hand2")
         self.boton_registrarse.pack(side=tk.RIGHT, padx=(10, 10))
 
         # Botón de iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, width=12, height=2, bg="white", fg="black", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_iniciar_sesion, width=12, height=2, bg="white", fg="black", cursor="hand2")
         self.boton_iniciar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
         # Frame principal para el contenido
@@ -68,11 +70,13 @@ class InicioApp(tk.Frame):
         label_subtitle = tk.Label(frame, text=subtitle, font=("Arial", 12), bg="#ffffff")
         label_subtitle.pack(pady=(5, 10))
         
-    def registrar(self):
-        # Aquí puedes definir la lógica para registrarse
-        print("Registro...")  # Este es un ejemplo
+    def registrarse(self):
+        pass
 
     def iniciar_sesion(self):
-        # Aquí puedes definir la lógica para iniciar sesión
-        print("Iniciar sesión...")  # Este es un ejemplo
+        pass
         
+if __name__ == "__main__":
+    root = tk.Tk()
+    controlador = Controlador(master=root)
+    root.mainloop()

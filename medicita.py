@@ -1,16 +1,15 @@
 import tkinter as tk
-from Pantallas.inicio import InicioApp
+from controlador import Controlador 
 
 def main():
     root = tk.Tk()
     root.title("Medicita")
-    root.iconbitmap("imagenes\chequeo.ico")
+    root.iconbitmap(r"imagenes\chequeo.ico")
     root.resizable(1,1)
     root.geometry("1420x800")
+    root.minsize(1420, 800)
     
-    inicio_app = InicioApp(root)
-    inicio_app.pack(fill=tk.BOTH, expand=True)
-    
+    controlador = Controlador(master=root) 
     root.mainloop()
 
 if __name__ == "__main__":
