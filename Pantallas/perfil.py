@@ -111,7 +111,7 @@ class PerfilApp(tk.Frame):
         self.label_horario = tk.Label(self.form_frame, text="Horario de Atención:", font=("Helvetica", 18), bg="#ffffff")
         self.label_horario.grid(row=9, column=0, padx=(50, 0), pady=(5, 5), sticky="w")
         
-        self.boton_horario = tk.Button(self.form_frame, text="Seleccionar Horario de Atención", font=("Helvetica", 18), anchor="w", padx=10, command=self.abrir_ventana_horario, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_horario = tk.Button(self.form_frame, text="Seleccionar Horario de Atención", font=("Helvetica", 14), anchor="w", padx=10, command=self.abrir_ventana_horario, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_horario.grid(row=10, column=0, columnspan=2, padx=(50, 50), pady=(5, 5), sticky="we", ipady=5, ipadx=70)
         
         # Botón para guardar cambios
@@ -133,12 +133,6 @@ class PerfilApp(tk.Frame):
         
         # Centrar la ventana en la pantalla
         self.centrar_ventana(self.ventana_horario)
-        
-        # Estilo de los widgets
-        style = ttk.Style()
-        style.configure("TButton", font=("Helvetica", 12), padding=10)
-        style.configure("TLabel", font=("Helvetica", 10), padding=5)
-        style.configure("TCheckbutton", font=("Helvetica", 10))
 
         # Frame para contener los días
         frame_dias = tk.Frame(self.ventana_horario, bg="white", padx=10, pady=10)
