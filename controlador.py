@@ -2,7 +2,9 @@ import tkinter as tk
 from Pantallas.inicio import InicioApp
 from Pantallas.iniciar_sesion import IniciarSesionApp
 from Pantallas.registrarse import RegistrarseApp
+from Pantallas.perfil import PerfilApp
 from Pantallas.menu import MenuApp
+from Pantallas.recuperar_contraseña import RecuperarPasswordApp
 
 class Controlador:
     def __init__(self, master):
@@ -27,9 +29,19 @@ class Controlador:
         
     def mostrar_menu(self):
         self.cerrar_pantalla_actual()
-        self.current_app = MenuApp(master=self.master)
+        self.current_app = MenuApp(master=self.master, controlador=self)  # Asegúrate de pasar el controlador
+        self.current_app.pack(fill=tk.BOTH, expand=True)
+        
+    def mostrar_recuperar_contraseña(self):
+        self.cerrar_pantalla_actual()
+        self.current_app = RecuperarPasswordApp(master=self.master, controlador=self)
         self.current_app.pack(fill=tk.BOTH, expand=True)
 
+    def mostrar_perfil(self):
+        self.cerrar_pantalla_actual()
+        self.current_app = PerfilApp(master=self.master, controlador=self)  # Asegúrate de pasar el controlador
+        self.current_app.pack(fill=tk.BOTH, expand=True)
+         
     def cerrar_pantalla_actual(self):
         if self.current_app is not None:
             self.current_app.pack_forget()  # Oculta la pantalla actual

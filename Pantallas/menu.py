@@ -2,9 +2,10 @@ import tkinter as tk
 from tkinter import PhotoImage
 
 class MenuApp(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
+        self.controlador = controlador
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
@@ -18,13 +19,13 @@ class MenuApp(tk.Frame):
         self.label_titulo = tk.Label(self.header_frame, text="Medicita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
         self.label_titulo.pack(side=tk.LEFT)
 
-        # Botón de perfil con imagen
+        # Botón de perfil 
         self.boton_perfil_imagen = PhotoImage(file="imagenes/usuario.png")  # Asegúrate de que la ruta sea correcta
-        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA")
+        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.controlador.mostrar_perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA")
         self.boton_perfil.pack(side=tk.RIGHT, padx=(20, 10))
 
         # Botón de cerrar sesión
-        self.boton_cerrar_sesion = tk.Button(self.header_frame, text="Cerrar sesión", font=("Helvetica", 18, "bold"), command=self.cerrar_sesion, width=12, height=2, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_cerrar_sesion = tk.Button(self.header_frame, text="Cerrar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_inicio, width=12, height=2, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_cerrar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
         # Frame principal para el contenido

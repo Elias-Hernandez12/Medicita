@@ -2,13 +2,13 @@ import tkinter as tk
 from tkinter import PhotoImage
 
 class RecuperarPasswordApp(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
+        self.controlador = controlador
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
-        
         
     def create_widgets(self):
         # Frame para el header
@@ -26,15 +26,11 @@ class RecuperarPasswordApp(tk.Frame):
         # Crear el formulario de inicio de sesión dentro de un frame
         self.crear_frame_iniciar_sesion()
         
-        # Crear el boton regresar
-        self.crear_boton_regresar()
-        
-    def crear_boton_regresar(self):
         # Cargar la imagen (asegúrate de que la ruta sea correcta)
         self.imagen = PhotoImage(file="imagenes/regresar.png")  # Cambia esto a la ruta correcta de tu imagen
         
         # Botón de imagen
-        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.regresar, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
+        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_iniciar_sesion, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
         self.boton_imagen.place(x=40, y=30)  # Ajusta la posición como desees
         
     def crear_frame_iniciar_sesion(self):
@@ -107,21 +103,13 @@ class RecuperarPasswordApp(tk.Frame):
         if entry.get() == "":
             entry.insert(0, placeholder_text)  # Restaura el texto inicial
             entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
-
-    def regresar(self):
-
-        print("Regresar...")  # Este es un ejemplo
-        
+    
     def recuperar(self):
         print("Recuperar contraseña...")
         
         
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Medicita")  # Título de la ventana
-    root.iconbitmap("imagenes/chequeo.ico")  # Cambia esto a la ruta correcta de tu icono
-
-    app = RecuperarPasswordApp(master=root)
+    app = RecuperarPasswordApp(master=root)  # No olvides pasar el controlador aquí
     app.pack(fill=tk.BOTH, expand=True)
-
     root.mainloop()

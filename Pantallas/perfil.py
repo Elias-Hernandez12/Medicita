@@ -4,9 +4,10 @@ from tkinter.ttk import Combobox, Checkbutton
 from PIL import Image, ImageTk, ImageDraw
 
 class PerfilApp(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, master=None, controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
+        self.controlador = controlador
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
@@ -32,21 +33,17 @@ class PerfilApp(tk.Frame):
         # Crear el formulario de inicio de sesión dentro de un frame
         self.crear_frame_iniciar_sesion()
         
-        # Crear el boton regresar
-        self.crear_boton_regresar()
-        
-    def crear_boton_regresar(self):
         # Cargar la imagen (asegúrate de que la ruta sea correcta)
         self.imagen = PhotoImage(file="imagenes/regresar.png")  # Cambia esto a la ruta correcta de tu imagen
         
         # Botón de imagen
-        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.regresar, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
+        self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_menu, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
         self.boton_imagen.place(x=80, y=30)  # Ajusta la posición como desees
         
     def crear_frame_iniciar_sesion(self):
         # Frame para el formulario de inicio de sesión con dimensiones fijas
         self.form_frame = tk.Frame(self.main_frame, bg="#ffffff", relief=tk.GROOVE, borderwidth=2)
-        self.form_frame.place(relx=0.5, rely=0.5, anchor="center", width=1000, height=690)  # Establecer tamaño y centrar
+        self.form_frame.place(relx=0.5, rely=0.5, anchor="center", width=1050, height=690)  # Establecer tamaño y centrar
 
         # Label de bienvenida
         self.label_bienvenida = tk.Label(self.form_frame, text="Perfil del usuario", font=("Helvetica", 26, "bold"), bg="#ffffff", fg="black")
@@ -111,16 +108,16 @@ class PerfilApp(tk.Frame):
         self.label_horario = tk.Label(self.form_frame, text="Horario de Atención:", font=("Helvetica", 18), bg="#ffffff")
         self.label_horario.grid(row=9, column=0, padx=(50, 0), pady=(5, 5), sticky="w")
         
-        self.boton_horario = tk.Button(self.form_frame, text="Seleccionar Horario de Atención", font=("Helvetica", 14), anchor="w", padx=10, command=self.abrir_ventana_horario, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_horario = tk.Button(self.form_frame, text="Seleccionar Horario de Atención", font=("Helvetica", 14), anchor="w", padx=10, command=self.abrir_ventana_horario, bg="white", fg="black", cursor="hand2")
         self.boton_horario.grid(row=10, column=0, columnspan=2, padx=(50, 50), pady=(5, 5), sticky="we", ipady=5, ipadx=70)
         
         # Botón para guardar cambios
-        self.boton_guardar_cambios = tk.Button(self.form_frame, text="Guardar Cambios", font=("Helvetica", 14, "bold"), command=self.guardar_cambios, bg="#332a2a", fg="white", cursor="hand2")
-        self.boton_guardar_cambios.grid(row=11, column=0, padx=120, pady=10, sticky="w", ipadx=40, ipady=5)
+        self.boton_cambiar_contraseña = tk.Button(self.form_frame, text="Cambiar Contraseña", font=("Helvetica", 14, "bold"), command=self.cambiar_contraseña, bg="white", fg="black", cursor="hand2")
+        self.boton_cambiar_contraseña.grid(row=11, column=0, padx=120, pady=10, sticky="w", ipadx=40, ipady=5)
         
         # Botón para cambiar contraseña
-        self.boton_cambiar_contraseña = tk.Button(self.form_frame, text="Cambiar Contraseña", font=("Helvetica", 14, "bold"), command=self.cambiar_contraseña, bg="#332a2a", fg="white", cursor="hand2")
-        self.boton_cambiar_contraseña.grid(row=11, column=1, padx=90, pady=10, sticky="w", ipadx=40, ipady=5)
+        self.boton_guardar_cambios = tk.Button(self.form_frame, text="Guardar Cambios", font=("Helvetica", 14, "bold"), command=self.guardar_cambios, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_guardar_cambios.grid(row=11, column=1, padx=90, pady=10, sticky="w", ipadx=40, ipady=5)
     
     def abrir_ventana_horario(self):
         # Crear una ventana emergente estilizada
@@ -262,10 +259,6 @@ class PerfilApp(tk.Frame):
         if entry.get() == "":
             entry.insert(0, placeholder_text)  # Restaura el texto inicial
             entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
-
-    def regresar(self):
-
-        print("Regresar...")  # Este es un ejemplo
     
     def cambiar_contraseña(self):
         # Crear una ventana emergente para cambiar la contraseña

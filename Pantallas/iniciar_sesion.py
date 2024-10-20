@@ -67,7 +67,7 @@ class IniciarSesionApp(tk.Frame):
         self.boton_iniciar_sesion.grid(row=6, column=0, columnspan=4, padx=(70, 0), pady=(20, 10), sticky="we")
         
         # boton de recuperar contraseña
-        self.boton_recuperar_contraseña = tk.Button(self.form_frame, text="¿Recuperar contraseña?", font=("Helvetica", 18, "bold"), command=self.recuperar_password, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
+        self.boton_recuperar_contraseña = tk.Button(self.form_frame, text="¿Recuperar contraseña?", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_recuperar_contraseña, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
         self.boton_recuperar_contraseña.grid(row=7, column=0, columnspan=4, padx=(70, 0), pady=(10, 10), sticky="we")
         
         # Label pregunta y Boton registarse
@@ -100,10 +100,6 @@ class IniciarSesionApp(tk.Frame):
         correo = self.entry_correo.get()
         contrasena = self.entry_contrasena.get()
         print(f"Iniciar sesión con correo: {correo} y contraseña: {contrasena}") 
-
-    # cierra la pantalla iniciar_sesion.py y abre la pantalla recuperar_contraseña.py
-    def recuperar_password(self):
-        pass
         
         
 if __name__ == "__main__":
