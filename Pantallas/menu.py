@@ -24,7 +24,7 @@ class MenuApp(tk.Frame):
         self.boton_perfil.pack(side=tk.RIGHT, padx=(20, 10))
 
         # Botón de cerrar sesión
-        self.boton_cerrar_sesion = tk.Button(self.header_frame, text="Cerrar sesión", font=("Helvetica", 18, "bold"), command=self.cerrar_sesion, width=12, height=2, bg="black", fg="white", cursor="hand2")
+        self.boton_cerrar_sesion = tk.Button(self.header_frame, text="Cerrar sesión", font=("Helvetica", 18, "bold"), command=self.cerrar_sesion, width=12, height=2, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_cerrar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
         # Frame principal para el contenido
