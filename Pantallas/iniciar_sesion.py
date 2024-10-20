@@ -35,7 +35,7 @@ class IniciarSesionApp(tk.Frame):
         
         # Botón de imagen
         self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.regresar, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
-        self.boton_imagen.place(x=40, y=30)  # Ajusta la posición como desees
+        self.boton_imagen.place(x=80, y=30)  # Ajusta la posición como desees
         
     def crear_frame_iniciar_sesion(self):
         # Frame para el formulario de inicio de sesión con dimensiones fijas
