@@ -31,7 +31,7 @@ class PerfilApp(tk.Frame):
         self.main_frame.pack(padx=20, pady=20, fill=tk.BOTH, expand=True)
 
         # Crear el formulario de inicio de sesión dentro de un frame
-        self.crear_frame_iniciar_sesion()
+        self.crear_frame_perfil()
         
         # Cargar la imagen (asegúrate de que la ruta sea correcta)
         self.imagen = PhotoImage(file="imagenes/regresar.png")  # Cambia esto a la ruta correcta de tu imagen
@@ -40,7 +40,7 @@ class PerfilApp(tk.Frame):
         self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_menu, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
         self.boton_imagen.place(x=80, y=30)  # Ajusta la posición como desees
         
-    def crear_frame_iniciar_sesion(self):
+    def crear_frame_perfil(self):
         # Frame para el formulario de inicio de sesión con dimensiones fijas
         self.form_frame = tk.Frame(self.main_frame, bg="#ffffff", relief=tk.GROOVE, borderwidth=2)
         self.form_frame.place(relx=0.5, rely=0.5, anchor="center", width=1050, height=690)  # Establecer tamaño y centrar

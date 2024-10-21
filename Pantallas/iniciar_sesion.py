@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
-
 class IniciarSesionApp(tk.Frame):
     def __init__(self, master=None,  controlador=None):
         super().__init__(master)

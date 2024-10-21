@@ -45,7 +45,7 @@ class MenuApp(tk.Frame):
         self.frames_row.pack(fill=tk.X)
 
         # Crear 3 frames en una fila
-        self.create_frame(self.frames_row, "Registrar cita", "imagenes/registrar-cita.png", self.registrar_cita)
+        self.create_frame(self.frames_row, "Registrar cita", "imagenes/registrar-cita.png", self.controlador.mostrar_registrar_cita)
         self.create_frame(self.frames_row, "Historial de citas", "imagenes/historial-de-citas.png", self.historial_citas)
         self.create_frame(self.frames_row, "Agenda", "imagenes/agenda.png", self.agenda)
 
