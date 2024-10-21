@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import PhotoImage, messagebox
+import re
 
 class IniciarSesionApp(tk.Frame):
     def __init__(self, master=None,  controlador=None):
@@ -62,7 +63,7 @@ class IniciarSesionApp(tk.Frame):
         self.set_placeholder(self.entry_contrasena, "************")
 
         # Botón para iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_iniciar_sesion.grid(row=6, column=0, columnspan=4, padx=(70, 0), pady=(20, 10), sticky="we")
         
         # boton de recuperar contraseña
@@ -98,7 +99,28 @@ class IniciarSesionApp(tk.Frame):
     def iniciar_sesion(self):
         correo = self.entry_correo.get()
         contrasena = self.entry_contrasena.get()
-        print(f"Iniciar sesión con correo: {correo} y contraseña: {contrasena}") 
+
+        # Validar el formato del correo electrónico
+        if not self.validar_correo(correo):
+            messagebox.showerror("Error", "Por favor, ingresa un correo electrónico válido.")
+            return
+        
+        # Validar que la contraseña no esté vacía y que cumpla con una longitud mínima
+        if len(contrasena) < 6:
+            messagebox.showerror("Error", "La contraseña debe tener al menos 6 caracteres.")
+            return
+        
+        # Aquí puedes implementar tu lógica de autenticación
+        if correo == "DiegoLuna@gmail.com" and contrasena == "qwerty123":
+            messagebox.showinfo("Éxito", "Inicio de sesión exitoso.")
+            self.controlador.mostrar_menu()
+        else:
+            messagebox.showerror("Error", "Credenciales incorrectas. Inténtalo nuevamente.")
+    
+    def validar_correo(self, correo):
+        # Expresión regular para validar el formato de correo
+        patron_correo = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+        return re.match(patron_correo, correo) is not None
         
         
 if __name__ == "__main__":

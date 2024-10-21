@@ -46,8 +46,8 @@ class MenuApp(tk.Frame):
 
         # Crear 3 frames en una fila
         self.create_frame(self.frames_row, "Registrar cita", "imagenes/registrar-cita.png", self.controlador.mostrar_registrar_cita)
-        self.create_frame(self.frames_row, "Historial de citas", "imagenes/historial-de-citas.png", self.historial_citas)
-        self.create_frame(self.frames_row, "Agenda", "imagenes/agenda.png", self.agenda)
+        self.create_frame(self.frames_row, "Historial de citas", "imagenes/historial-de-citas.png", self.controlador.mostrar_historial)
+        self.create_frame(self.frames_row, "Agenda", "imagenes/agenda.png", self.controlador.mostrar_agenda)
 
     def create_frame(self, parent, title, image_path, command):
         # Crear un frame
@@ -63,24 +63,7 @@ class MenuApp(tk.Frame):
         boton_imagen = tk.Button(frame, image=button_image, command=command, bg="#ffffff", borderwidth=0)
         boton_imagen.pack(pady=(10, 50))
         boton_imagen.image = button_image  # Mantener una referencia a la imagen
-
-    def registrar_cita(self):
-        print("Registrar cita...")  # Lógica para registrar cita
-
-    def historial_citas(self):
-        print("Historial de citas...")  # Lógica para mostrar historial de citas
-
-    def agenda(self):
-        print("Mostrar agenda...")  # Lógica para mostrar la agenda
         
-    def perfil(self):
-        # Aquí puedes definir la lógica para el perfil
-        print("Registro...")  # Este es un ejemplo
-
-    def cerrar_sesion(self):
-        # Aquí puedes definir la lógica para cerrar sesión
-        print("Iniciar sesión...")  # Este es un ejemplo
-
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Medicita")  # Título de la ventana

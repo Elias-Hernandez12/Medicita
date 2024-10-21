@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import PhotoImage
+from tkinter import PhotoImage, messagebox
+import re
 
 class RecuperarPasswordApp(tk.Frame):
     def __init__(self, master=None, controlador=None):
@@ -74,14 +75,14 @@ class RecuperarPasswordApp(tk.Frame):
         self.entry_nacimiento.grid(row=5, column=1, padx=70, pady=(10, 10), sticky="w", ipady=5, ipadx=70)
         self.set_placeholder(self.entry_nacimiento, "dd/mm/aaaa")
         
-        # Label y entrada para la contraseña
+        # Label y entrada para la cedula
         self.label_cedula = tk.Label(self.form_frame, text="Número de Cédula Profesional:", font=("Helvetica", 18), bg="#ffffff")
         self.label_cedula.grid(row=6, column=0, padx=(70, 10), pady=(10, 10), sticky="w")
-        self.entry_cedula = tk.Entry(self.form_frame, font=("Helvetica", 18), show='*', relief= tk.SUNKEN, borderwidth=2)
+        self.entry_cedula = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
         self.entry_cedula.grid(row=7, column=0, padx=70, pady=(10, 10), sticky="w", ipady=5, ipadx=70)
         self.set_placeholder(self.entry_cedula, "12345678")
         
-        # Botón para iniciar sesión
+        # Botón para verificar y recuperar la contraseña
         self.boton_recuperar = tk.Button(self.form_frame, text="Verificar y Recuperar Contraseña", font=("Helvetica", 14, "bold"), command=self.recuperar, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_recuperar.grid(row=7, column=1, padx=70, pady=(10, 10), sticky="w", ipadx=40, ipady=5)
     
@@ -105,8 +106,43 @@ class RecuperarPasswordApp(tk.Frame):
             entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
     
     def recuperar(self):
-        print("Recuperar contraseña...")
+        # Obtener los valores de las entradas
+        correo = self.entry_correo.get()
+        especialidad = self.entry_especialidad.get()
+        nombre = self.entry_nombre.get()
+        nacimiento = self.entry_nacimiento.get()
+        cedula = self.entry_cedula.get()
+
+     
+        # Validar que todos los campos estén llenos y que tengan los valores válidos
+        if correo != "DiegoLuna@gmail.com" or not re.match(r"[^@]+@[^@]+\.[^@]+", correo):
+            messagebox.showerror("Error", "Por favor, ingresa un correo electrónico válido. Ejemplo: doctor@example.com")
+            return
+
+        if especialidad != "Cirujano" or not especialidad.isalpha():
+            messagebox.showerror("Error", "Por favor, ingresa una especialidad válida. Ejemplo: Cardiología")
+            return
+
+        if nombre != "Dr. Diego Luna" or not all(x.isalpha() or x.isspace() or x == '.' for x in nombre):
+            messagebox.showerror("Error", "Por favor, ingresa un nombre completo válido. Ejemplo: Dr. Juan Pérez")
+            return
+
+        if not re.match(r"^\d{2}/\d{2}/\d{4}$", nacimiento) or nacimiento != "15/05/2003":
+            messagebox.showerror("Error", "Por favor, ingresa una fecha válida en el formato dd/mm/aaaa. Ejemplo: 15/05/2003")
+            return
+
+        if cedula != "12121212" or len(cedula) != 8 or not cedula.isdigit():
+            messagebox.showerror("Error", "Por favor, ingresa un número de cédula válido de 8 dígitos.")
+            return
+    
+        # Simulación de recuperación exitosa solo si todos los datos son correctos
+        password_recuperada = "qwerty123"
         
+        # Desplegar la ventana emergente mostrando la contraseña recuperada
+        messagebox.showinfo("Recuperación de Contraseña", f"La contraseña recuperada es: {password_recuperada}")
+       
+        self.main_frame.focus_set()  # Establecer el enfoque en el frame principal
+            
         
 if __name__ == "__main__":
     root = tk.Tk()

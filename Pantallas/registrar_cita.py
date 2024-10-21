@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import PhotoImage, ttk
 import datetime
+
 class RegistrarCitaApp(tk.Frame):
     def __init__(self, master=None, controlador=None):
         super().__init__(master)

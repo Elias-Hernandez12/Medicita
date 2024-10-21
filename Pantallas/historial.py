@@ -1,41 +1,66 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import PhotoImage, ttk
 
-class HistorialApp(tk.Tk):
-    def __init__(self, controlador=None):
-        super().__init__()
+class HistorialApp(tk.Frame):
+    def __init__(self, master=None, controlador=None):
+        super().__init__(master)
+        master.geometry("1420x800")
         self.controlador = controlador
-        self.geometry("400x300")
-        self.title("Selector de Hora")
+        self.master = master
+        self.configure(bg="#E0F7FA")  # Establecer el color de fondo
+        self.create_widgets()
 
-        # Frame para los Combobox
-        self.frame_combobox = tk.Frame(self)
-        self.frame_combobox.pack(pady=20)
+    def create_widgets(self):
+        # Frame para el header
+        self.header_frame = tk.Frame(self, bg="#E0F7FA")
+        self.header_frame.pack(padx=20, pady=10, fill=tk.X)
 
-        # Combobox para la hora
-        self.combo_hora = ttk.Combobox(self.frame_combobox, values=[f"{i:02d}" for i in range(1, 13)], width=5)
-        self.combo_hora.grid(row=0, column=0, padx=0)
-        self.combo_hora.set("01")  # Valor por defecto
-        self.combo_hora.bind("<<ComboboxSelected>>", self.mostrar_hora)  # Evento al seleccionar
+        # Título del programa
+        self.label_titulo = tk.Label(self.header_frame, text="MediCita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
+        self.label_titulo.pack(side=tk.LEFT)
 
-        # Combobox para los minutos
-        self.combo_minutos = ttk.Combobox(self.frame_combobox, values=[f"{i:02d}" for i in range(0, 60)], width=5)
-        self.combo_minutos.grid(row=0, column=1, padx=0)
-        self.combo_minutos.set("00")  # Valor por defecto
-        self.combo_minutos.bind("<<ComboboxSelected>>", self.mostrar_hora)  # Evento al seleccionar
+        # Frame principal para el contenido
+        self.main_frame = tk.Frame(self, bg="#E0F7FA")
+        self.main_frame.pack(padx=20, pady=20, fill=tk.BOTH, expand=True)
 
-        # Combobox para AM/PM
-        self.combo_am_pm = ttk.Combobox(self.frame_combobox, values=["AM", "PM"], width=5)
-        self.combo_am_pm.grid(row=0, column=2, padx=0)
-        self.combo_am_pm.set("AM")  # Valor por defecto
-        self.combo_am_pm.bind("<<ComboboxSelected>>", self.mostrar_hora)  # Evento al seleccionar
+        # Botón para regresar al menú principal
+        self.imagen = PhotoImage(file="imagenes/regresar.png")  # Asegúrate de tener esta imagen
+        self.boton_regresar = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_menu, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
+        self.boton_regresar.place(x=10, y=30)
 
-    def mostrar_hora(self, event=None):
-        hora = self.combo_hora.get()
-        minutos = self.combo_minutos.get()
-        am_pm = self.combo_am_pm.get()
-        print(f"Hora seleccionada: {hora}:{minutos} {am_pm}")
+        # Frame para mostrar el historial
+        self.historial_frame = tk.Frame(self.main_frame, bg="#ffffff", relief=tk.GROOVE, borderwidth=2)
+        self.historial_frame.place(relx=0.5, rely=0.5, anchor="center", width=1150, height=690)
 
-if __name__ == "__main__":
-    app = HistorialApp()
-    app.mainloop()
+        # Título del historial
+        self.label_historial = tk.Label(self.historial_frame, text="Historial de Citas", font=("Helvetica", 26, "bold"), bg="#ffffff", fg="black")
+        self.label_historial.pack(pady=10)
+
+        # Aquí puedes usar un Treeview para mostrar el historial en forma de tabla
+        self.tree = ttk.Treeview(self.historial_frame, columns=("Fecha", "Hora", "Paciente", "Descripción"), show='headings', height=20)
+        self.tree.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)
+
+        # Definir las columnas
+        self.tree.heading("Fecha", text="Fecha")
+        self.tree.heading("Hora", text="Hora")
+        self.tree.heading("Paciente", text="Paciente")
+        self.tree.heading("Descripción", text="Descripción")
+
+        # Ajustar el ancho de las columnas
+        self.tree.column("Fecha", width=150, anchor="center")
+        self.tree.column("Hora", width=150, anchor="center")
+        self.tree.column("Paciente", width=200, anchor="center")
+        self.tree.column("Descripción", width=300, anchor="center")
+
+        # Cargar datos de ejemplo
+        self.cargar_historial()
+
+    def cargar_historial(self):
+        # Ejemplo de cómo añadir elementos al Treeview (podrías cargar los datos de una base de datos aquí)
+        citas = [
+            ("20/10/2024", "10:00 AM", "Juan Pérez", "Consulta General"),
+            ("19/10/2024", "02:00 PM", "María López", "Revisión de control"),
+            ("18/10/2024", "09:00 AM", "Carlos García", "Chequeo Cardiológico")
+        ]
+        for cita in citas:
+            self.tree.insert("", tk.END, values=cita)
