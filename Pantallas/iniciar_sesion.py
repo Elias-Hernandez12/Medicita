@@ -63,7 +63,7 @@ class IniciarSesionApp(tk.Frame):
         self.set_placeholder(self.entry_contrasena, "************")
 
         # Botón para iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_iniciar_sesion.grid(row=6, column=0, columnspan=4, padx=(70, 0), pady=(20, 10), sticky="we")
         
         # boton de recuperar contraseña
