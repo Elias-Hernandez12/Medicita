@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
 from modelos.conexion_db import ConexionDB
+import re, bcrypt
 
 class RegistroPacienteApp(tk.Frame):
     def __init__(self, master=None, controlador=None):
@@ -87,14 +88,14 @@ class RegistroPacienteApp(tk.Frame):
         self.entry_correo.grid(row=7, column=0, columnspan=4, padx=(70, 0), pady=5, sticky="we", ipady=5)
         self.set_placeholder(self.entry_correo, "usuario@example.com")
 
-        # Label y entrada para la Contraseña
+        # Label y entrada para la Contrasena
         self.label_contrasena = tk.Label(self.form_frame, text="Contraseña:", font=("Helvetica", 18), bg="#ffffff")
         self.label_contrasena.grid(row=8, column=0, padx=(70, 10), pady=5, sticky="w")
         self.entry_contrasena = tk.Entry(self.form_frame, font=("Helvetica", 18), show='*', relief=tk.SUNKEN, borderwidth=2)
         self.entry_contrasena.grid(row=9, column=0, columnspan=1, padx=(70, 0), pady=5, sticky="w", ipady=5)
         self.set_placeholder(self.entry_contrasena, "*************")
 
-        # Label y entrada para Confirmar Contraseña
+        # Label y entrada para Confirmar Contrasena
         self.label_confirmar_contrasena = tk.Label(self.form_frame, text="Confirmar Contraseña:", font=("Helvetica", 18), bg="#ffffff")
         self.label_confirmar_contrasena.grid(row=8, column=1, padx=(70, 10), pady=5, sticky="w")
         self.entry_confirmar_contrasena = tk.Entry(self.form_frame, font=("Helvetica", 18), show='*', relief=tk.SUNKEN, borderwidth=2)
@@ -102,42 +103,55 @@ class RegistroPacienteApp(tk.Frame):
         self.set_placeholder(self.entry_confirmar_contrasena, "*************")
 
     def set_placeholder(self, entry, placeholder_text):
-        # Establecer el texto de placeholder
+        # Función que gestiona el placeholder
+        def placeholder_behavior(event):
+            if event.type == tk.EventType.FocusIn and entry.get() == placeholder_text:
+                entry.delete(0, tk.END)
+                entry.config(fg="black")
+            elif event.type == tk.EventType.FocusOut and entry.get() == "":
+                entry.insert(0, placeholder_text)
+                entry.config(fg="#A9A9A9")
+
+        # Configuración inicial del placeholder
         entry.insert(0, placeholder_text)
-        entry.config(fg="#A9A9A9")  # Color gris para el placeholder
-
-        # Asociar eventos para el manejo de focus
-        entry.bind("<FocusIn>", lambda event: self.on_focus(event, entry, placeholder_text))
-        entry.bind("<FocusOut>", lambda event: self.on_focus_out(event, entry, placeholder_text))
-
-    def on_focus(self, event, entry, placeholder_text):
-        if entry.get() == placeholder_text:
-            entry.delete(0, tk.END)  # Eliminar el placeholder
-            entry.config(fg="black")  # Cambiar el color del texto a negro cuando se enfoca
-
-    def on_focus_out(self, event, entry, placeholder_text):
-        if entry.get() == "":
-            entry.insert(0, placeholder_text)  # Restaura el texto inicial
-            entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholder
+        entry.config(fg="#A9A9A9")
+        
+        # Asignación de eventos con la función anónima
+        entry.bind("<FocusIn>", placeholder_behavior)
+        entry.bind("<FocusOut>", placeholder_behavior)
             
+    def validar_contrasena(self, contrasena):
+        if len(contrasena) < 8:
+            messagebox.showwarning("Advertencia", "La contrasena debe tener al menos 8 caracteres.")
+            return False
+        elif not re.search("[A-Za-z]", contrasena) or not re.search("[0-9]", contrasena):
+            messagebox.showwarning("Advertencia", "La contrasena debe tener al menos una letra y un número.")
+            return False
+        return True
+
     def registrar_paciente(self):
+        # Obtener valores del formulario
         nombre = self.entry_nombre.get()
         correo = self.entry_correo.get()
         telefono = self.entry_telefono.get()
         fecha_nacimiento = self.entry_fecha_nacimiento.get()
-        contrasena = self.entry_contrasena.get()  # Obtener la contraseña
-
-        # Validar campos requeridos
-        if not nombre or not correo or not contrasena:
-            messagebox.showerror("Error", "Nombre, correo y contraseña son obligatorios.")
+        contrasena = self.entry_contrasena.get()
+        confirmar_contrasena = self.entry_confirmar_contrasena.get()
+        
+        # Validación de contrasenas
+        if contrasena != confirmar_contrasena:
+            messagebox.showerror("Error", "Las contrasenas no coinciden.")
             return
+        
+        if not self.validar_contrasena(contrasena):
+            return
+        
+        # Cifrar la contrasena
+        contrasena_cifrada = bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt())
+        
+        # Insertar en la base de datos
+        self.conexion.insertar_paciente(nombre, correo, telefono, fecha_nacimiento, contrasena_cifrada)
 
-        # Intentar insertar el registro en la base de datos
-        conexion = ConexionDB()
-        try:
-            conexion.insertar_paciente(nombre, correo, telefono, fecha_nacimiento, contrasena)
-            messagebox.showinfo("Éxito", "Registro exitoso.")
-            if self.controlador:
-                self.controlador.mostrar_iniciar_sesion() 
-        except Exception as e:
-            messagebox.showerror("Error", f"No se pudo registrar al paciente: {str(e)}")
+        messagebox.showinfo("Éxito", "Paciente registrado correctamente.")
+        self.controlador.mostrar_iniciar_sesion()
+
