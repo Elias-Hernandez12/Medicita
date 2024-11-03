@@ -53,7 +53,7 @@ class IniciarSesionApp(tk.Frame):
         self.label_correo.grid(row=2, column=0, padx=(70, 10), pady=(10, 10), sticky="w")
         self.entry_correo = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
         self.entry_correo.grid(row=3, column=0, columnspan=4, padx=(70, 0), pady=(10, 10), sticky="we", ipady=5)
-        self.set_placeholder(self.entry_correo, "doctor@example.com")
+        self.set_placeholder(self.entry_correo, "usuario@example.com")
 
         # Label y entrada para la contraseña
         self.label_contrasena = tk.Label(self.form_frame, text="Contraseña:", font=("Helvetica", 18), bg="#ffffff")
@@ -73,7 +73,7 @@ class IniciarSesionApp(tk.Frame):
         # Label pregunta y Boton registarse
         self.label_pregunta = tk.Label(self.form_frame, text="¿No tienes una cuenta?", font=("Helvetica", 18), bg="#ffffff", fg="black")
         self.label_pregunta.grid(row=8, column=0, columnspan=1, padx=(70, 10), pady=(10, 10), sticky="we")
-        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrarse, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
+        self.boton_registrarse = tk.Button(self.form_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_rol, bg="#ffffff", fg="#007FFF", cursor="hand2", borderwidth=0, activebackground="#ffffff")
         self.boton_registrarse.grid(row=8, column=1, padx=(10, 50), pady=(10, 10), sticky="we")
     
     def set_placeholder(self, entry, placeholder_text):

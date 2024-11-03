@@ -21,7 +21,7 @@ class InicioApp(tk.Frame):
         self.label_titulo.pack(side=tk.LEFT)
 
         # Botón de registrarse
-        self.boton_registrarse = tk.Button(self.header_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrarse, width=12, height=2, bg="black", fg="white", cursor="hand2")
+        self.boton_registrarse = tk.Button(self.header_frame, text="Registrarse", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_rol, width=12, height=2, bg="black", fg="white", cursor="hand2")
         self.boton_registrarse.pack(side=tk.RIGHT, padx=(10, 10))
 
         # Botón de iniciar sesión
@@ -69,12 +69,6 @@ class InicioApp(tk.Frame):
         # Subtítulo en el frame
         label_subtitle = tk.Label(frame, text=subtitle, font=("Arial", 12), bg="#ffffff")
         label_subtitle.pack(pady=(5, 10))
-        
-    def registrarse(self):
-        pass
-
-    def iniciar_sesion(self):
-        pass
         
 if __name__ == "__main__":
     root = tk.Tk()
