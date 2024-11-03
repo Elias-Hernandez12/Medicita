@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, bcrypt
 
 class ConexionDB:
     def __init__(self):
@@ -34,7 +34,28 @@ class ConexionDB:
             )
         """)
         self.conexion.commit()
+
+    def verificar_iniciar_sesion(self, correo, contrasena):
+        # Verifica si el correo pertenece a un paciente
+        self.cursor.execute("SELECT contrasena FROM pacientes WHERE correo = ?", (correo,))
+        fila = self.cursor.fetchone()
         
+        if fila is not None:
+            contrasena_almacenada = fila[0]  # contrasena_almacenada es de tipo bytes
+            if bcrypt.checkpw(contrasena.encode('utf-8'), contrasena_almacenada):  # Solo se codifica la entrada
+                return "paciente"  # Inicio de sesión exitoso como paciente
+
+        # Verifica si el correo pertenece a un doctor
+        self.cursor.execute("SELECT contrasena FROM doctores WHERE correo = ?", (correo,))
+        fila = self.cursor.fetchone()
+        
+        if fila is not None:
+            contrasena_almacenada = fila[0]  # contrasena_almacenada es de tipo bytes
+            if bcrypt.checkpw(contrasena.encode('utf-8'), contrasena_almacenada):  # Solo se codifica la entrada
+                return "doctor"  # Inicio de sesión exitoso como doctor
+
+        return None  # Correo o contraseña incorrectos
+
     def insertar_paciente(self, nombre, correo, telefono, fecha_nacimiento, contrasena):
         try:
             self.cursor.execute(""" 

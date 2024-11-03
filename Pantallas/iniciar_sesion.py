@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
+from modelos.conexion_db import ConexionDB
 import re
 
 class IniciarSesionApp(tk.Frame):
@@ -8,6 +9,7 @@ class IniciarSesionApp(tk.Frame):
         master.geometry("1420x800")
         master.minsize(1420, 800)
         self.controlador = controlador
+        self.conexion = ConexionDB()
         self.master = master
         self.configure(bg="#E0F7FA")  # Establecer el color de fondo
         self.create_widgets()
@@ -63,7 +65,7 @@ class IniciarSesionApp(tk.Frame):
         self.set_placeholder(self.entry_contrasena, "************")
 
         # Botón para iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, bg="#332a2a", fg="white", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.form_frame, text="Iniciar Sesión", font=("Helvetica", 18, "bold"), command=self.iniciar_sesion, bg="#332a2a", fg="white", cursor="hand2")
         self.boton_iniciar_sesion.grid(row=6, column=0, columnspan=4, padx=(70, 0), pady=(20, 10), sticky="we")
         
         # boton de recuperar contraseña
@@ -77,50 +79,36 @@ class IniciarSesionApp(tk.Frame):
         self.boton_registrarse.grid(row=8, column=1, padx=(10, 50), pady=(10, 10), sticky="we")
     
     def set_placeholder(self, entry, placeholder_text):
-        # Establecer el texto de placeholder
+        # Función que gestiona el placeholder
+        def placeholder_behavior(event):
+            if event.type == tk.EventType.FocusIn and entry.get() == placeholder_text:
+                entry.delete(0, tk.END)
+                entry.config(fg="black")
+            elif event.type == tk.EventType.FocusOut and entry.get() == "":
+                entry.insert(0, placeholder_text)
+                entry.config(fg="#A9A9A9")
+                
         entry.insert(0, placeholder_text)
-        entry.config(fg="#A9A9A9")  # Color gris para el placeholder
+        entry.config(fg="#A9A9A9")
+        
+        entry.bind("<FocusIn>", placeholder_behavior)
+        entry.bind("<FocusOut>", placeholder_behavior)
 
-        # Asociar eventos para el manejo de focus
-        entry.bind("<FocusIn>", lambda event: self.on_focus(event, entry, placeholder_text))
-        entry.bind("<FocusOut>", lambda event: self.on_focus_out(event, entry, placeholder_text))
 
-    def on_focus(self, event, entry, placeholder_text):
-        if entry.get() == placeholder_text:
-            entry.delete(0, tk.END)  # Eliminar el placeholder
-            entry.config(fg="black")  # Cambiar el color del texto a negro cuando se enfoca
-
-    def on_focus_out(self, event, entry, placeholder_text):
-        if entry.get() == "":
-            entry.insert(0, placeholder_text)  # Restaura el texto inicial
-            entry.config(fg="#A9A9A9")  # Cambiar el color del texto de nuevo al color del placeholde
-
-    # cierra la pantalla iniciar_sesion.py y abre la pantalla menú.py   
     def iniciar_sesion(self):
-        correo = self.entry_correo.get()
-        contrasena = self.entry_contrasena.get()
+        correo = self.entry_correo.get()  # Obtiene el correo ingresado
+        contrasena = self.entry_contrasena.get()  # Obtiene la contraseña ingresada
 
-        # Validar el formato del correo electrónico
-        if not self.validar_correo(correo):
-            messagebox.showerror("Error", "Por favor, ingresa un correo electrónico válido.")
-            return
-        
-        # Validar que la contraseña no esté vacía y que cumpla con una longitud mínima
-        if len(contrasena) < 6:
-            messagebox.showerror("Error", "La contraseña debe tener al menos 6 caracteres.")
-            return
-        
-        # Aquí puedes implementar tu lógica de autenticación
-        if correo == "DiegoLuna@gmail.com" and contrasena == "qwerty123":
-            messagebox.showinfo("Éxito", "Inicio de sesión exitoso.")
+        rol = self.conexion.verificar_iniciar_sesion(correo, contrasena)
+
+        if rol == "paciente":
+            messagebox.showinfo("Éxito", "Inicio de sesión exitoso como paciente.")
+            self.controlador.mostrar_menu()
+        elif rol == "doctor":
+            messagebox.showinfo("Éxito", "Inicio de sesión exitoso como doctor.")
             self.controlador.mostrar_menu()
         else:
-            messagebox.showerror("Error", "Credenciales incorrectas. Inténtalo nuevamente.")
-    
-    def validar_correo(self, correo):
-        # Expresión regular para validar el formato de correo
-        patron_correo = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-        return re.match(patron_correo, correo) is not None
+            messagebox.showerror("Error", "Correo o contraseña incorrectos.")
         
         
 if __name__ == "__main__":
