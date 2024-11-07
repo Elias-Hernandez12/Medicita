@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import PhotoImage, messagebox
 from modelos.conexion_db import ConexionDB
-import re, bcrypt
+import re
+
 class RegistroDoctorApp(tk.Frame):
     def __init__(self, master=None, controlador=None,):
         super().__init__(master)
@@ -144,11 +145,8 @@ class RegistroDoctorApp(tk.Frame):
         if not self.validar_contrasena(contrasena):
             return
         
-        # Cifrar la contrasena
-        contrasena_cifrada = bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt())
-        
         # Insertar en la base de datos
-        self.conexion.insertar_doctor(nombre, correo, telefono, especialidad, contrasena_cifrada)
+        self.conexion.insertar_doctor(nombre, correo, telefono, especialidad, contrasena)
 
         messagebox.showinfo("Éxito", "Doctor registrado correctamente.")
         self.controlador.mostrar_iniciar_sesion()

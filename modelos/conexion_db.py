@@ -41,8 +41,8 @@ class ConexionDB:
         fila = self.cursor.fetchone()
         
         if fila is not None:
-            contrasena_almacenada = fila[0]  # contrasena_almacenada es de tipo bytes
-            if bcrypt.checkpw(contrasena.encode('utf-8'), contrasena_almacenada):  # Solo se codifica la entrada
+            contrasena_almacenada = fila[0]  # contrasena_almacenada
+            if contrasena == contrasena_almacenada:
                 return "paciente"  # Inicio de sesión exitoso como paciente
 
         # Verifica si el correo pertenece a un doctor
@@ -50,8 +50,8 @@ class ConexionDB:
         fila = self.cursor.fetchone()
         
         if fila is not None:
-            contrasena_almacenada = fila[0]  # contrasena_almacenada es de tipo bytes
-            if bcrypt.checkpw(contrasena.encode('utf-8'), contrasena_almacenada):  # Solo se codifica la entrada
+            contrasena_almacenada = fila[0]  # contrasena_almacenada
+            if contrasena == contrasena_almacenada: 
                 return "doctor"  # Inicio de sesión exitoso como doctor
 
         return None  # Correo o contraseña incorrectos

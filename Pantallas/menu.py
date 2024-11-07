@@ -21,7 +21,7 @@ class MenuApp(tk.Frame):
 
         # Botón de perfil 
         self.boton_perfil_imagen = PhotoImage(file="imagenes/usuario.png")  # Asegúrate de que la ruta sea correcta
-        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.controlador.mostrar_perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA")
+        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.controlador.mostrar_perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA", cursor="hand2")
         self.boton_perfil.pack(side=tk.RIGHT, padx=(20, 10))
 
         # Botón de cerrar sesión
