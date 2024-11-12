@@ -17,7 +17,7 @@ class InicioApp(tk.Frame):
         self.header_frame.pack(padx=20, pady=10, fill=tk.X)
 
         # Título del programa
-        self.label_titulo = tk.Label(self.header_frame, text="Medicita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
+        self.label_titulo = tk.Label(self.header_frame, text="MediCita", font=("Helvetica", 28, "bold"), bg="#E0F7FA", fg="#007FFF")
         self.label_titulo.pack(side=tk.LEFT)
 
         # Botón de registrarse

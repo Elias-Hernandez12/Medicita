@@ -31,7 +31,7 @@ class IniciarSesionApp(tk.Frame):
         self.crear_frame_iniciar_sesion()
         
         # Cargar la imagen (asegúrate de que la ruta sea correcta)
-        self.imagen = PhotoImage(file="imagenes/regresar.png")  # Cambia esto a la ruta correcta de tu imagen
+        self.imagen = PhotoImage(file=r"imagenes\regresar.png")
         
         # Botón de imagen
         self.boton_imagen = tk.Button(self.main_frame, image=self.imagen, command=self.controlador.mostrar_inicio, borderwidth=0, bg="#E0F7FA", activebackground="#E0F7FA")
