@@ -39,7 +39,7 @@ class RegistroDoctorApp(tk.Frame):
     def crear_frame_registrar(self):
         # Frame para el formulario de inicio de sesión con dimensiones fijas
         self.form_frame = tk.Frame(self.main_frame, bg="#ffffff", relief=tk.GROOVE, borderwidth=2)
-        self.form_frame.place(relx=0.5, rely=0.5, anchor="center", width=800, height=680)  # Establecer tamaño y centrar
+        self.form_frame.place(relx=0.5, rely=0.5, anchor="center", width=1000, height=680)  # Establecer tamaño y centrar
 
         # Label de bienvenida
         self.label_bienvenida = tk.Label(self.form_frame, text="Registro de Doctores", font=("Helvetica", 26, "bold"), bg="#ffffff", fg="black")
@@ -60,8 +60,15 @@ class RegistroDoctorApp(tk.Frame):
         self.label_correo = tk.Label(self.form_frame, text="Correo Electrónico:", font=("Helvetica", 18), bg="#ffffff")
         self.label_correo.grid(row=4, column=0, padx=(70, 10), pady=5, sticky="w")
         self.entry_correo = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
-        self.entry_correo.grid(row=5, column=0, columnspan=4, padx=(70, 0), pady=5, sticky="we", ipady=5)
+        self.entry_correo.grid(row=5, column=0, columnspan=4, padx=(70, 0), pady=5, sticky="w", ipady=5)
         self.set_placeholder(self.entry_correo, "Doctor@example.com")
+
+        # Label y entrada para la celuda
+        self.label_cedula = tk.Label(self.form_frame, text="Cédula:", font=("Helvetica", 18), bg="#ffffff")
+        self.label_cedula.grid(row=4, column=1, padx=(70, 10), pady=5, sticky="w")
+        self.entry_cedula = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
+        self.entry_cedula.grid(row=5, column=1, columnspan=4, padx=(70, 0), pady=5, sticky="w", ipady=5)
+        self.set_placeholder(self.entry_cedula, "12345678")
         
         # Label y entrada para la especialidad
         self.label_especialidad = tk.Label(self.form_frame, text="Especialidad:", font=("Helvetica", 18), bg="#ffffff")
@@ -71,7 +78,7 @@ class RegistroDoctorApp(tk.Frame):
         self.set_placeholder(self.entry_especialidad, "Cardiología")
 
         # Label y entrada para el telefono
-        self.label_telefono = tk.Label(self.form_frame, text="telefono:", font=("Helvetica", 18), bg="#ffffff")
+        self.label_telefono = tk.Label(self.form_frame, text="Telefono:", font=("Helvetica", 18), bg="#ffffff")
         self.label_telefono.grid(row=6, column=1, padx=(70, 10), pady=5, sticky="w")
         self.entry_telefono = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
         self.entry_telefono.grid(row=7, column=1, columnspan=1, padx=(70, 0), pady=5, sticky="w", ipady=5)
@@ -133,6 +140,7 @@ class RegistroDoctorApp(tk.Frame):
         nombre = self.entry_nombre.get()
         correo = self.entry_correo.get()
         telefono = self.entry_telefono.get()
+        cedula = self.entry_cedula-get()
         especialidad = self.entry_especialidad.get()
         contrasena = self.entry_contrasena.get()
         confirmar_contrasena = self.entry_confirmar_contrasena.get()

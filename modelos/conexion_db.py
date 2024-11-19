@@ -28,6 +28,7 @@ class ConexionDB:
                 nombre TEXT NOT NULL,
                 correo TEXT UNIQUE NOT NULL,
                 telefono TEXT,
+                cedula TEXT,
                 especialidad TEXT,
                 contrasena TEXT NOT NULL,
                 creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -69,12 +70,12 @@ class ConexionDB:
         except sqlite3.Error as e:
             print(f"Error al registrar el paciente: {e}")
 
-    def insertar_doctor(self, nombre, correo, telefono, especialidad, contrasena):
+    def insertar_doctor(self, nombre, correo, telefono, cedula, especialidad, contrasena):
         try:
             self.cursor.execute(""" 
-                INSERT INTO doctores (nombre, correo, telefono, especialidad, contrasena) 
-                VALUES (?, ?, ?, ?, ?)
-            """, (nombre, correo, telefono, especialidad, contrasena))
+                INSERT INTO doctores (nombre, correo, telefono, cedula, especialidad, contrasena) 
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (nombre, correo, telefono, cedula, especialidad, contrasena))
             self.conexion.commit()  
             print("Doctor registrado correctamente.")
         except sqlite3.IntegrityError:

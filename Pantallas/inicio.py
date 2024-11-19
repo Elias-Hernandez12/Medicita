@@ -25,7 +25,8 @@ class InicioApp(tk.Frame):
         self.boton_registrarse.pack(side=tk.RIGHT, padx=(10, 10))
 
         # Botón de iniciar sesión
-        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_iniciar_sesion, width=12, height=2, bg="white", fg="black", cursor="hand2")
+        #self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_iniciar_sesion, width=12, height=2, bg="white", fg="black", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrar_doctor, width=12, height=2, bg="white", fg="black", cursor="hand2")
         self.boton_iniciar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
         # Frame principal para el contenido
@@ -70,7 +71,3 @@ class InicioApp(tk.Frame):
         label_subtitle = tk.Label(frame, text=subtitle, font=("Arial", 12), bg="#ffffff")
         label_subtitle.pack(pady=(5, 10))
         
-if __name__ == "__main__":
-    root = tk.Tk()
-    controlador = Controlador(master=root)
-    root.mainloop()
