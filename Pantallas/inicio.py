@@ -26,7 +26,7 @@ class InicioApp(tk.Frame):
 
         # Botón de iniciar sesión
         #self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_iniciar_sesion, width=12, height=2, bg="white", fg="black", cursor="hand2")
-        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_registrar_doctor, width=12, height=2, bg="white", fg="black", cursor="hand2")
+        self.boton_iniciar_sesion = tk.Button(self.header_frame, text="Iniciar sesión", font=("Helvetica", 18, "bold"), command=self.controlador.mostrar_menu, width=12, height=2, bg="white", fg="black", cursor="hand2")
         self.boton_iniciar_sesion.pack(side=tk.RIGHT, padx=(10, 20))
 
         # Frame principal para el contenido
