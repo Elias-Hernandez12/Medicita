@@ -1,4 +1,4 @@
-import sqlite3, bcrypt
+import sqlite3
 
 class ConexionDB:
     def __init__(self):
