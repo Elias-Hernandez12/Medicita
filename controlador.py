@@ -10,6 +10,9 @@ from Pantallas.agenda import AgendaApp
 from Pantallas.rol import RolApp 
 from Pantallas.registro_paciente import RegistroPacienteApp
 from Pantallas.registro_doctor import RegistroDoctorApp
+from Pantallas.menu_paciente import MenuPacienteApp
+from Pantallas.perfil_paciente import PerfilPacienteApp
+
 
 class Controlador:
     def __init__(self, master):
@@ -46,7 +49,12 @@ class Controlador:
         self.cerrar_pantalla_actual()
         self.current_app = MenuApp(master=self.master, controlador=self)
         self.current_app.pack(fill=tk.BOTH, expand=True)
-
+        
+    def mostrar_menu_paciente(self):
+        self.cerrar_pantalla_actual()
+        self.current_app = MenuPacienteApp(master=self.master, controlador=self)
+        self.current_app.pack(fill=tk.BOTH, expand=True)
+        
     def mostrar_recuperar_contraseña(self):
         self.cerrar_pantalla_actual()
         self.current_app = RecuperarPasswordApp(master=self.master, controlador=self)
@@ -56,7 +64,19 @@ class Controlador:
         self.cerrar_pantalla_actual()
         self.current_app = PerfilApp(master=self.master, controlador=self)
         self.current_app.pack(fill=tk.BOTH, expand=True)
+        
+    def mostrar_perfil_paciente(self):
+        pass
 
+    def mostrar_historial_medico(self):
+        pass
+
+    def mostrar_cita_proxima(self):
+        pass
+    
+    def mostrar_agendar_cita(self):
+        pass
+    
     def mostrar_registrar_cita(self):
         self.cerrar_pantalla_actual()
         self.current_app = RegistrarCitaApp(master=self.master, controlador=self)

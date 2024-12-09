@@ -94,25 +94,18 @@ class IniciarSesionApp(tk.Frame):
         entry.bind("<FocusIn>", placeholder_behavior)
         entry.bind("<FocusOut>", placeholder_behavior)
 
-
     def iniciar_sesion(self):
-        correo = self.entry_correo.get()  # Obtiene el correo ingresado
-        contrasena = self.entry_contrasena.get()  # Obtiene la contraseña ingresada
+        correo = self.entry_correo.get() 
+        contrasena = self.entry_contrasena.get()  
 
         rol = self.conexion.verificar_iniciar_sesion(correo, contrasena)
 
         if rol == "paciente":
             messagebox.showinfo("Éxito", "Inicio de sesión exitoso como paciente.")
-            self.controlador.mostrar_menu()
+            self.controlador.mostrar_menu_paciente()
         elif rol == "doctor":
             messagebox.showinfo("Éxito", "Inicio de sesión exitoso como doctor.")
             self.controlador.mostrar_menu()
         else:
             messagebox.showerror("Error", "Correo o contraseña incorrectos.")
         
-        
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = IniciarSesionApp(master=root)
-    app.pack(fill=tk.BOTH, expand=True)
-    root.mainloop()

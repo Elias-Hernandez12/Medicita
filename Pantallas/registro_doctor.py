@@ -140,7 +140,7 @@ class RegistroDoctorApp(tk.Frame):
         nombre = self.entry_nombre.get()
         correo = self.entry_correo.get()
         telefono = self.entry_telefono.get()
-        cedula = self.entry_cedula-get()
+        cedula = self.entry_cedula.get()
         especialidad = self.entry_especialidad.get()
         contrasena = self.entry_contrasena.get()
         confirmar_contrasena = self.entry_confirmar_contrasena.get()
@@ -154,7 +154,7 @@ class RegistroDoctorApp(tk.Frame):
             return
         
         # Insertar en la base de datos
-        self.conexion.insertar_doctor(nombre, correo, telefono, especialidad, contrasena)
+        self.conexion.insertar_doctor(nombre, correo, telefono, cedula, especialidad, contrasena)
 
         messagebox.showinfo("Éxito", "Doctor registrado correctamente.")
         self.controlador.mostrar_iniciar_sesion()

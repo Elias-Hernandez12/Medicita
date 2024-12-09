@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
-class MenuApp(tk.Frame):
+class MenuPacienteApp(tk.Frame):
     def __init__(self, master=None, controlador=None):
         super().__init__(master)
         master.geometry("1420x800")
@@ -21,7 +21,7 @@ class MenuApp(tk.Frame):
 
         # Botón de perfil 
         self.boton_perfil_imagen = PhotoImage(file="imagenes/usuario.png")  # Asegúrate de que la ruta sea correcta
-        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.controlador.mostrar_perfil, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA", cursor="hand2")
+        self.boton_perfil = tk.Button(self.header_frame, image=self.boton_perfil_imagen, command=self.controlador.mostrar_perfil_paciente, bg="#E0F7FA", borderwidth=0, activebackground="#E0F7FA", cursor="hand2")
         self.boton_perfil.pack(side=tk.RIGHT, padx=(20, 10))
 
         # Botón de cerrar sesión
@@ -37,7 +37,7 @@ class MenuApp(tk.Frame):
         self.label_bienvenida.pack(pady=(20, 20))
 
         # Label de gestor de citas
-        self.label_gestor = tk.Label(self.main_frame, text="Tu gestor de citas", font=("Helvetica", 22, "bold"), bg="#E0F7FA", fg="#8a8d8e")
+        self.label_gestor = tk.Label(self.main_frame, text="Tu portal de salud personal", font=("Helvetica", 22, "bold"), bg="#E0F7FA", fg="#8a8d8e")
         self.label_gestor.pack(pady=(10, 70))
 
         # Frame para los 3 elementos
@@ -45,9 +45,9 @@ class MenuApp(tk.Frame):
         self.frames_row.pack(fill=tk.X)
 
         # Crear 3 frames en una fila
-        self.create_frame(self.frames_row, "Registrar cita", "imagenes/registrar-cita.png", self.controlador.mostrar_registrar_cita)
-        self.create_frame(self.frames_row, "Historial de citas", "imagenes/historial-de-citas.png", self.controlador.mostrar_historial)
-        self.create_frame(self.frames_row, "Agenda", "imagenes/agenda.png", self.controlador.mostrar_agenda)
+        self.create_frame(self.frames_row, "Agendar cita", r"imagenes\agendar-citas.png", self.controlador.mostrar_agendar_cita)
+        self.create_frame(self.frames_row, "Proximas citas", r"imagenes\cita-proxima.png", self.controlador.mostrar_cita_proxima)
+        self.create_frame(self.frames_row, "Historial médico", r"imagenes\historial-medico.png", self.controlador.mostrar_historial_medico)
 
     def create_frame(self, parent, title, image_path, command):
         # Crear un frame

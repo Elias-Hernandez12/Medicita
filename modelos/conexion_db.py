@@ -1,4 +1,4 @@
-import sqlite3, bcrypt
+import sqlite3
 
 class ConexionDB:
     def __init__(self):
@@ -42,9 +42,9 @@ class ConexionDB:
         fila = self.cursor.fetchone()
         
         if fila is not None:
-            contrasena_almacenada = fila[0]  # contrasena_almacenada
+            contrasena_almacenada = fila[0]
             if contrasena == contrasena_almacenada:
-                return "paciente"  # Inicio de sesión exitoso como paciente
+                return "paciente"  
 
         # Verifica si el correo pertenece a un doctor
         self.cursor.execute("SELECT contrasena FROM doctores WHERE correo = ?", (correo,))
@@ -53,9 +53,9 @@ class ConexionDB:
         if fila is not None:
             contrasena_almacenada = fila[0]  # contrasena_almacenada
             if contrasena == contrasena_almacenada: 
-                return "doctor"  # Inicio de sesión exitoso como doctor
+                return "doctor" 
 
-        return None  # Correo o contraseña incorrectos
+        return None 
 
     def insertar_paciente(self, nombre, correo, telefono, fecha_nacimiento, contrasena):
         try:
