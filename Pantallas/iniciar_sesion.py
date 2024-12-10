@@ -51,7 +51,7 @@ class IniciarSesionApp(tk.Frame):
         self.label_gestor.grid(row=1, column=0, columnspan=2, padx=(70, 0) ,pady=(20, 30), sticky="w")
 
         # Label y entrada para el correo electrónico
-        self.label_correo = tk.Label(self.form_frame, text="Correo Electrónico:", font=("Helvetica", 18), bg="#ffffff")
+        self.label_correo = tk.Label(self.form_frame, text="Nombre/Correo Electrónico/telefono", font=("Helvetica", 18), bg="#ffffff")
         self.label_correo.grid(row=2, column=0, padx=(70, 10), pady=(10, 10), sticky="w")
         self.entry_correo = tk.Entry(self.form_frame, font=("Helvetica", 18), relief= tk.SUNKEN, borderwidth=2)
         self.entry_correo.grid(row=3, column=0, columnspan=4, padx=(70, 0), pady=(10, 10), sticky="we", ipady=5)
@@ -95,10 +95,10 @@ class IniciarSesionApp(tk.Frame):
         entry.bind("<FocusOut>", placeholder_behavior)
 
     def iniciar_sesion(self):
-        correo = self.entry_correo.get() 
-        contrasena = self.entry_contrasena.get()  
+        identificador = self.entry_correo.get().strip()  # Campo que combina nombre/correo/teléfono
+        contrasena = self.entry_contrasena.get().strip()
 
-        rol = self.conexion.verificar_iniciar_sesion(correo, contrasena)
+        rol = self.conexion.verificar_iniciar_sesion(identificador, contrasena)
 
         if rol == "paciente":
             messagebox.showinfo("Éxito", "Inicio de sesión exitoso como paciente.")
@@ -107,5 +107,4 @@ class IniciarSesionApp(tk.Frame):
             messagebox.showinfo("Éxito", "Inicio de sesión exitoso como doctor.")
             self.controlador.mostrar_menu()
         else:
-            messagebox.showerror("Error", "Correo o contraseña incorrectos.")
-        
+            messagebox.showerror("Error", "Identificador o contraseña incorrectos.")

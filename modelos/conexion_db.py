@@ -36,27 +36,28 @@ class ConexionDB:
         """)
         self.conexion.commit()
 
-    def verificar_iniciar_sesion(self, correo, contrasena):
-        # Verifica si el correo pertenece a un paciente
-        self.cursor.execute("SELECT contrasena FROM pacientes WHERE correo = ?", (correo,))
+    def verificar_iniciar_sesion(self, identificador, contrasena):
+        # Verifica si el identificador pertenece a un paciente
+        self.cursor.execute("""
+            SELECT contrasena FROM pacientes 
+            WHERE correo = ? OR telefono = ? OR nombre = ?
+        """, (identificador, identificador, identificador))
         fila = self.cursor.fetchone()
-        
-        if fila is not None:
-            contrasena_almacenada = fila[0]
-            if contrasena == contrasena_almacenada:
-                return "paciente"  
 
-        # Verifica si el correo pertenece a un doctor
-        self.cursor.execute("SELECT contrasena FROM doctores WHERE correo = ?", (correo,))
+        if fila and fila[0] == contrasena:
+            return "paciente"
+
+        # Verifica si el identificador pertenece a un doctor
+        self.cursor.execute("""
+            SELECT contrasena FROM doctores 
+            WHERE correo = ? OR telefono = ? OR nombre = ?
+        """, (identificador, identificador, identificador))
         fila = self.cursor.fetchone()
-        
-        if fila is not None:
-            contrasena_almacenada = fila[0]  # contrasena_almacenada
-            if contrasena == contrasena_almacenada: 
-                return "doctor" 
 
-        return None 
+        if fila and fila[0] == contrasena:
+            return "doctor"
 
+        return None
     def insertar_paciente(self, nombre, correo, telefono, fecha_nacimiento, contrasena):
         try:
             self.cursor.execute(""" 

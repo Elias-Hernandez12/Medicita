@@ -1,7 +1,6 @@
 import tkinter as tk
 from Pantallas.inicio import InicioApp
 from Pantallas.iniciar_sesion import IniciarSesionApp
-from Pantallas.perfil import PerfilApp
 from Pantallas.menu import MenuApp
 from Pantallas.recuperar_contraseña import RecuperarPasswordApp
 from Pantallas.registrar_cita import RegistrarCitaApp
@@ -11,8 +10,6 @@ from Pantallas.rol import RolApp
 from Pantallas.registro_paciente import RegistroPacienteApp
 from Pantallas.registro_doctor import RegistroDoctorApp
 from Pantallas.menu_paciente import MenuPacienteApp
-from Pantallas.perfil_paciente import PerfilPacienteApp
-
 
 class Controlador:
     def __init__(self, master):
@@ -59,14 +56,6 @@ class Controlador:
         self.cerrar_pantalla_actual()
         self.current_app = RecuperarPasswordApp(master=self.master, controlador=self)
         self.current_app.pack(fill=tk.BOTH, expand=True)
-
-    def mostrar_perfil(self):
-        self.cerrar_pantalla_actual()
-        self.current_app = PerfilApp(master=self.master, controlador=self)
-        self.current_app.pack(fill=tk.BOTH, expand=True)
-        
-    def mostrar_perfil_paciente(self):
-        pass
 
     def mostrar_historial_medico(self):
         pass
